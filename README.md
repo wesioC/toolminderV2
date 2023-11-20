@@ -26,3 +26,4 @@ Sinta-se à vontade para explorar e contribuir para este projeto, tornando a ges
 Para executar este projeto localmente, siga as instruções em nosso Guia de Instalação (LINK DO GUIA DE INSTALAÇÃO). Você também pode acessar uma demonstração ao vivo da aplicação em (LINK DA DEMO).
 
 Contribuições e feedback são bem-vindos. Ajude-nos a aprimorar e expandir este projeto.
+"# toolminderV2" 
