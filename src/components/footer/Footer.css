@@ -1,0 +1,72 @@
+@import '@radix-ui/colors/black-alpha.css';
+@import '@radix-ui/colors/blue-alpha.css';
+@import '@radix-ui/themes/styles.css';
+
+/* Importe suas paletas de cores e estilos necessários */
+
+.footer_ {
+  background: #018031;
+  /* Cor de fundo do footer */
+  margin-top: 1rem;
+  color: white;
+  /* Cor do texto */
+
+  /* Estilização adicional conforme necessário */
+  padding: 3rem;
+
+ 
+  /* Adicionando espaço interno ao footer */
+  display: flex;
+  /* Tornando o footer um contêiner flexível */
+  justify-content: space-around;
+  /* Distribuindo os itens igualmente no footer */
+  align-items: center;
+  /* Alinhando os itens verticalmente no centro */
+  position: fixed;
+  /* Define o elemento como fixo */
+  bottom: 0;
+  /* O mantém fixo no rodapé */
+  width: 100%;
+  /* Faz o footer ocupar toda a largura da tela */
+}
+
+/* Estilos para os links no footer */
+.footer_ a {
+  color: white;
+  /* Cor dos links */
+  text-decoration: none;
+  /* Removendo sublinhado padrão dos links */
+  margin-right: 10px;
+  /* Adicionando espaçamento entre os links */
+}
+
+.footer_ a:hover {
+  text-decoration: underline;
+  /* Adicionando sublinhado ao passar o mouse nos links */
+}
+
+a:hover{
+  /* transform: scale(1.5); */
+  color: #76EE94;
+  text-decoration: underline;
+}
+
+a{
+  text-decoration: none;
+  color: white;
+  font-weight: 700;
+  font-size: 10pt;
+}
+
+.text__footer{
+  text-decoration: none;
+  color: white;
+  font-weight: 700;
+  font-size: 10pt;
+}
+.text__gw{
+  text-decoration: none;
+  color: white;
+  font-weight: 400;
+  font-size: 8pt;
+}
