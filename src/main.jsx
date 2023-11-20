@@ -1,7 +1,5 @@
-// main.jsx
-
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client'; // Alteração na importação
 import './index.css';
 import '@radix-ui/themes/styles.css';
 import { Theme } from '@radix-ui/themes';
@@ -13,7 +11,9 @@ import Tool from './routes/Tool.jsx';
 import User from './routes/User.jsx';
 import Header from './components/header/Header.jsx';
 
-ReactDOM.render(
+const root = createRoot(document.getElementById('root'));
+
+root.render(
   <React.StrictMode>
     <Router>
       <Theme appearance="light" accentColor="grass" panelBackground="solid" radius="full" >
@@ -23,8 +23,8 @@ ReactDOM.render(
           <Route path="/Tool" element={<Tool />} />
           <Route path="/User" element={<User />} />
         </Routes>
+        {/* <Footer /> */}
       </Theme>
     </Router>
-  </React.StrictMode>,
-  document.getElementById('root')
+  </React.StrictMode>
 );
