@@ -27,7 +27,7 @@ root.render(
           <Route path='/' element={<LoginAdm/>}/>
           <Route path='/Historico' element={<Historico/>}/>
         </Routes>
-        <Footer />
+        {/* <Footer /> */}
       </Theme>
     </Router>
   </React.StrictMode>

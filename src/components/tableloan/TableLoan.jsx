@@ -63,6 +63,7 @@ const TableLoan = ({ searchTerm }) => {
                 <Table.Header>
                     <Table.Row className='title__row'>
                         <Table.ColumnHeaderCell className='title__row' align='center'>Nome</Table.ColumnHeaderCell>
+                        <Table.ColumnHeaderCell className='title__row' align='center'>Telefone</Table.ColumnHeaderCell>
                         <Table.ColumnHeaderCell className='title__row' align='center'>Ferramenta</Table.ColumnHeaderCell>
                         <Table.ColumnHeaderCell className='title__row' align='center'>Quantidade</Table.ColumnHeaderCell>
                         <Table.ColumnHeaderCell className='title__row' align='center'>Data de devolução</Table.ColumnHeaderCell>
@@ -74,6 +75,7 @@ const TableLoan = ({ searchTerm }) => {
                     {filteredLoans.map((loan, index) => (
                         <Table.Row key={index}>
                             <Table.RowHeaderCell align='center'>{loan.receiver}</Table.RowHeaderCell>
+                            <Table.RowHeaderCell align='center'>{loan.receiverPhone}</Table.RowHeaderCell>
                             <Table.RowHeaderCell align='center'>{loan.toolName}</Table.RowHeaderCell>
                             <Table.Cell align='center'>{loan.toolQuantity}</Table.Cell>
                             <Table.Cell align='center'>{loan.dateHand}</Table.Cell>

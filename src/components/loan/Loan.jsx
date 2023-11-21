@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import {Button, Dialog, Flex, Text, TextField } from '@radix-ui/themes';
+import InputMask from 'react-input-mask';
 import "./Loan.css"
 
 const Loan = ({ toolName, toolCode }) => {
   const [receiverName, setReceiverName] = useState('');
   const [receiverEmail, setReceiverEmail] = useState('');
+  const [receiverPhone, setReceiverPhone] = useState(''); 
   const [returnDate, setReturnDate] = useState('');
   const [loanQuantity, setLoanQuantity] = useState('');
 
@@ -17,7 +19,8 @@ const Loan = ({ toolName, toolCode }) => {
       dateHand: returnDate,
       receiver: receiverName,
       sender: 'UserName', // Definindo o remetente como 'UserName'
-      receiverEmail: receiverEmail
+      receiverEmail: receiverEmail,
+      receiverPhone: receiverPhone
     };
 
     console.log(loanData);
@@ -79,6 +82,25 @@ const Loan = ({ toolName, toolCode }) => {
           className='input_modal'
           value={receiverEmail} onChange={event => setReceiverEmail(event.target.value)}
         />
+      </label>
+      <label>
+        <Text as="div" size="2" mb="1" weight="bold">
+          Telefone do destinatário
+        </Text>
+        <InputMask
+          mask="(99) 99999-9999"
+          placeholder="(99) 99999-9999"
+          value={receiverPhone}
+          onChange={(event) => setReceiverPhone(event.target.value)}
+        >
+          {(inputProps) => (
+            <TextField.Input
+              type="tel"
+              className="input_modal"
+              {...inputProps}
+            />
+          )}
+        </InputMask>
       </label>
       <Flex gap="3">
             <label>

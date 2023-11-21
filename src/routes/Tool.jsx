@@ -1,12 +1,18 @@
 import React, { useState } from 'react'
+import { useLocation } from 'react-router-dom';
 import { Button, Dialog, Flex, Text, TextField } from '@radix-ui/themes';
 import * as Form from '@radix-ui/react-form';
 import "../styles/Tool.css";
-
-import TableTool from '../components/tabletool/TableTool';
+import { FaSearch } from 'react-icons/fa';
+import TableAllTool from '../components/tablealltool/TableAllTool';
 import Header from '../components/header/Header';
 
 const Tool = () => {
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const matricula = params.get('matricula') || '';
+
+  const [searchTerm, setSearchTerm] = useState('');
   const [toolCode, setToolCode] = useState('');
   const [toolName, setToolName] = useState('');
   const [toolQuantity, setToolQuantity] = useState('');
@@ -57,7 +63,7 @@ const Tool = () => {
 
   return (
     <>
-      <Header />
+    <Header matricula={matricula} /> 
     <Flex direction="column" gap="6" right="3" align="center">
       <Form.Root className="FormRoot">
       <Text as="div" size="6" mb="1" weight="bold"  color='green'>
@@ -108,8 +114,23 @@ const Tool = () => {
           </Button>
         </Form.Submit>
       </Form.Root>
-      <TableTool/>
-       <div className='margin__'></div>
+
+      <div className='div__input'>
+        <TextField.Root className='input__busca'>
+          <TextField.Slot>
+            <FaSearch />
+          </TextField.Slot>
+          <TextField.Input
+            radius="full"
+            placeholder="Digite o nome ou código da ferramenta"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          </TextField.Root>
+      </div>
+
+      <TableAllTool searchTerm={searchTerm} />
+       
     </Flex>
     </>
   )

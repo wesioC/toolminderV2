@@ -1,42 +1,72 @@
-import React from 'react'
-import "../styles/LoginAdm.css";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import '../styles/LoginAdm.css';
 import { Flex, TextField, Button } from '@radix-ui/themes';
 import Footer from '../components/footer/Footer';
 
 const LoginAdm = () => {
-    return (
-        <>
-            <Flex className='body__'>
-                <div class="blurred-box">
-                    <div class="user-login-box">
-                        <span class="user-icon"></span>
-                        <div class="user-name">User</div>
-                        <label className='input_login'>
-                            <TextField.Input
-                                type="email"
-                                placeholder="Email"
+  const [matricula, setMatricula] = useState('');
+  const [senha, setSenha] = useState('');
+  const navigate = useNavigate();
+  const [userName, setUserName] = useState('');  
 
-                            />
-                        </label>
-                        <label className='input_login'>
-                            <TextField.Input
-                                type="password"
-                                placeholder="Senha"
+  const handleLogin = async () => {
+    const response = await fetch('http://localhost:3000/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        matricula: matricula,
+        senha: senha,
+      }),
+    });
 
-                            />
-                        </label>
-                        <Button onClick='/home' className='button__' radius="full" >
+    const data = await response.json();
 
-                            <a href='/home'>Entrar</a>
-                        </Button>
+    if (response.status === 200) {
+      // Se o login for bem-sucedido, redireciona para a página Home
+      navigate(`/home?matricula=${matricula}`);
+      // Atualiza o estado com o nome de usuário retornado na resposta
+      setUserName(data.userName); // Supondo que o nome retornado esteja em data.userName
+    } else {
+      // Caso contrário, mostra uma mensagem de erro (pode ser exibido no frontend)
+      console.log(data.error);
+    }
+  };
 
-                    </div>
+  return (
+    <>
+      <Flex className="body__">
+        <div className="blurred-box">
+          <div className="user-login-box">
+            <span className="user-icon"></span>
+            <div className="user-name"></div>
+            <label className="input_login">
+              <TextField.Input
+                type="email"
+                placeholder="Email"
+                value={matricula}
+                onChange={(e) => setMatricula(e.target.value)}
+              />
+            </label>
+            <label className="input_login">
+              <TextField.Input
+                type="password"
+                placeholder="Senha"
+                value={senha}
+                onChange={(e) => setSenha(e.target.value)}
+              />
+            </label>
+            <Button onClick={handleLogin} className="button__" radius="full">
+              Entrar
+            </Button>
+          </div>
+        </div>
+      </Flex>
+      <Footer />
+    </>
+  );
+};
 
-                </div>
-            </Flex>
-            {/* <Footer /> */}
-        </>
-    )
-}
-
-export default LoginAdm
+export default LoginAdm;

@@ -30,7 +30,7 @@
     position: relative;
     width: 250px;
     height: 350px;
-    top: calc(40% - 175px);
+    top: calc(50% - 175px);
     left: calc(50% - 125px);
     background: inherit;
     border-radius: 2px;
@@ -40,7 +40,7 @@
   .blurred-box:after{
    content: '';
    width: 300px;
-   height: 400px;
+   height: 300px;
    background: inherit; 
    position: absolute;
    left: -25px;
@@ -57,7 +57,7 @@
   /* Form which you dont need */
   .user-login-box{
     position: relative;
-    margin-top: 20px;
+    margin-top: 50px;
     text-align: center;
     z-index: 1;
   }
@@ -101,7 +101,6 @@
     justify-content: space-between;
     font-weight: 500;
     text-align: center;
-    margin-bottom: 2rem;
   }
 
  

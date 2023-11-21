@@ -41,6 +41,20 @@ app.get('/usuarios', (req, res) => {
   });
 });
 
+app.get('/getalltools', (req, res) => {
+  const sql = 'SELECT * FROM tools';
+
+  db.query(sql, (error, results) => {
+    if (error) {
+      console.error('Erro na consulta SQL: ' + error.message);
+      res.status(500).send('Erro ao buscar produtos no banco de dados');
+      return;
+    }
+
+    res.json(results);
+  });
+});
+
 app.get('/getavailabletools', (req, res) => {
   const sql = 'SELECT * FROM tools WHERE toolQuantity > 0';
 
@@ -69,28 +83,54 @@ app.get('/getloans', (req, res) => {
   });
 });
 
+app.get('/getloanshistory', (req, res) => {
+  const sql = 'SELECT * FROM loan WHERE dateReturn IS NOT NULL ORDER BY dateHand ASC';
+
+  db.query(sql, (error, results) => {
+    if (error) {
+      console.error('Erro na consulta SQL: ' + error.message);
+      res.status(500).send('Erro ao buscar empréstimos no banco de dados');
+      return;
+    }
+
+    res.json(results);
+  });
+});
+
+app.get('/getusername', (req, res) => {
+  const sql = 'SELECT SUBSTRING_INDEX(nome, " ", 1) AS name FROM usuarios WHERE matricula = ?';
+
+  db.query(sql, [req.query.matricula], (error, results) => {
+    if (error) {
+      console.error('Erro na consulta SQL: ' + error.message);
+      res.status(500).send('Erro ao buscar nome do usuário no banco de dados');
+      return;
+    }
+
+    res.json(results);
+  });
+});
 
 app.post('/login', (req, res) => {
-  const matricula = req.query.matricula;
-  const senha = req.body.senha;
+  const { matricula, senha } = req.body;
 
   if (!matricula || !senha) {
-    return res.status(400).send('Matrícula e senha são obrigatórias');
+    return res.status(400).json({ error: 'Matrícula e senha são obrigatórias' });
   }
 
   const sql = 'SELECT * FROM usuarios WHERE matricula = ? AND senha = ?';
   db.query(sql, [matricula, senha], (error, results) => {
     if (error) {
       console.error('Erro na consulta SQL: ' + error.message);
-      return res.status(500).send('Erro ao autenticar o usuário');
+      return res.status(500).json({ error: 'Erro ao autenticar usuário' });
     }
 
     if (results.length > 0) {
       // Usuário autenticado com sucesso
-      return res.send('Login bem-sucedido');
+      return res.status(200).json({ message: 'Login bem-sucedido' });
     } else {
       // Credenciais inválidas
-      return res.status(401).send('Credenciais inválidas');
+      return res.status(401).json({ error: 'Credenciais inválidas' });
     }
   });
 });
@@ -172,12 +212,13 @@ app.post('/addloan', async (req, res) => {
   const receiver = req.body.receiver;
   const sender = req.body.sender;
   const receiverEmail = req.body.receiverEmail;
+  const receiverPhone = req.body.receiverPhone;
 
-  if (!toolCode || !toolQuantity || !dateLoan || !dateHand || !receiver || !sender || !receiverEmail || !toolName) {
+  if (!toolCode || !toolQuantity || !dateLoan || !dateHand || !receiver || !sender || !receiverEmail || !toolName || !receiverPhone) {
     return res.status(400).json({ error: 'Código, quantidade, data de empréstimo, data de devolução, receptor e remetente são obrigatórios' });
   }
 
-  const sqlInsertLoan = 'INSERT INTO loan (toolCode, toolName, toolQuantity, dateLoan, dateHand, receiver, receiverEmail, sender) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
+  const sqlInsertLoan = 'INSERT INTO loan (toolCode, toolName, toolQuantity, dateLoan, dateHand, receiver, receiverEmail, receiverPhone, sender) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
   const sqlUpdateTool = 'UPDATE tools SET toolQuantity = toolQuantity - ? WHERE toolCode = ?';
 
   db.beginTransaction(function (err) {
@@ -185,7 +226,7 @@ app.post('/addloan', async (req, res) => {
       return res.status(500).json({ error: 'Erro ao iniciar transação no banco de dados' });
     }
 
-    db.query(sqlInsertLoan, [toolCode, toolName,toolQuantity, dateLoan, dateHand, receiver, receiverEmail, sender], function (error, result) {
+    db.query(sqlInsertLoan, [toolCode, toolName,toolQuantity, dateLoan, dateHand, receiver, receiverEmail, receiverPhone, sender], function (error, result) {
       if (error) {
         console.error('Erro na consulta SQL de inserção de empréstimo: ' + error.message);
         return db.rollback(() => {
