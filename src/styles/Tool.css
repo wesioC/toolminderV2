@@ -7,6 +7,9 @@
 @import '@radix-ui/colors/green-dark.css';
 @import '@radix-ui/colors/red-dark.css';
 
+.margin__{
+  margin-bottom: 5rem;
+}
 
 /* reset */
 input,

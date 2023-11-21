@@ -130,7 +130,7 @@ const Tool = () => {
       </div>
 
       <TableAllTool searchTerm={searchTerm} />
-       
+      <div className='margin__'></div>
     </Flex>
     </>
   )
