@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Table, Button } from '@radix-ui/themes';
 import '@radix-ui/themes/styles.css';
 import './TableTool.css';
@@ -7,9 +7,42 @@ import CrudTool from '../CrudTool/CrudTool';
 
 
 
-const TableTool = () => {
-    return (
+const TableTool = ({ searchTerm }) => {
+    const [tools, setTools] = useState([]);
 
+    const filteredTools = tools.filter(tool =>
+        tool.toolName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        tool.toolCode.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    useEffect(() => {
+        fetch('http://localhost:3000/getavailabletools')
+            .then(response => response.json())
+            .then(data => setTools(data))
+            .catch(error => console.error('Erro ao buscar ferramentas:', error));
+    }, []);
+
+    const handleDelete = (toolCode) => {
+        fetch('http://localhost:3000/removetools', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ toolCode }) // Envia o toolCode para remoção
+        })
+        .then(response => {
+            if (response.ok) {
+                // Se a remoção for bem-sucedida, atualize os dados
+                fetch('http://localhost:3000/getavailabletools')
+                    .then(response => response.json())
+                    .then(data => setTools(data))
+                    .catch(error => console.error('Erro ao buscar ferramentas:', error));
+            }
+        })
+        .catch(error => console.error('Erro ao remover ferramenta:', error));
+    };
+
+    return (
         <div className='table__tool'>
             <Table.Root className='custom-table-tool'>
                 <Table.Header>
@@ -23,19 +56,20 @@ const TableTool = () => {
                 </Table.Header>
 
                 <Table.Body>
-                    <Table.Row>
-                        <Table.RowHeaderCell align='center'>IFGRV56</Table.RowHeaderCell>
-                        <Table.RowHeaderCell align='center'>Mangueira</Table.RowHeaderCell>
-                        <Table.Cell align='center'>1</Table.Cell>
-                        <Table.Cell align='center'>IF Goiano</Table.Cell>
-                        <Table.Cell align='center'>
+                    {filteredTools.map((tool, index) => (
+                        <Table.Row key={index}>
+                            <Table.Cell align='center'>{tool.toolCode}</Table.Cell>
+                            <Table.Cell align='center'>{tool.toolName}</Table.Cell>
+                            <Table.Cell align='center'>{tool.toolQuantity}</Table.Cell>
+                            <Table.Cell align='center'>Ésio</Table.Cell>
+                            <Table.Cell align='center'>
                             <div className="button-container">
-                                <Loan/>
-                                {/* <Button  variant="solid" color='green'>Devolver</Button> */}
-                                <CrudTool/>
+                                <Loan toolName={tool.toolName} toolCode={tool.toolCode}/>
+                                <CrudTool onDelete={() => handleDelete(tool.toolCode)} />
                             </div>
                         </Table.Cell>
-                    </Table.Row>
+                        </Table.Row>
+                    ))}
                 </Table.Body>
             </Table.Root>
         </div>

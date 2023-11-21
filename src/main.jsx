@@ -10,6 +10,9 @@ import Home from './routes/Home.jsx';
 import Tool from './routes/Tool.jsx';
 import User from './routes/User.jsx';
 import Header from './components/header/Header.jsx';
+import LoginAdm from './routes/LoginAdm.jsx';
+import Historico from './routes/Historico.jsx';
+
 
 const root = createRoot(document.getElementById('root'));
 
@@ -17,11 +20,12 @@ root.render(
   <React.StrictMode>
     <Router>
       <Theme appearance="light" accentColor="grass" panelBackground="solid" radius="full" >
-        <Header />
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/Home" element={<Home />} />
           <Route path="/Tool" element={<Tool />} />
           <Route path="/User" element={<User />} />
+          <Route path='/' element={<LoginAdm/>}/>
+          <Route path='/Historico' element={<Historico/>}/>
         </Routes>
         {/* <Footer /> */}
       </Theme>

@@ -17,12 +17,12 @@ function Header() {
   };
     return (
         <nav className="nav">
-            <a href="/" className="nav__brand"><img src="\src\img\toolminder.svg"></img></a>
+            <a href="/home" className="nav__brand"><img src="\src\img\toolminder.svg"></img></a>
             <ul className={active}>
                 <li className="nav__item"><a href="/tool" className="nav__link">Ferramentas</a></li>
-                <li className="nav__item"><a href="/loan" className="nav__link">Emprestimos</a></li>
+                <li className="nav__item"><a href="/historico" className="nav__link">Histórico</a></li>
                 <li className="nav__item"><a href="/user" className="nav__link">Wilker</a></li>
-                <li className="nav__item"><a href="#" className="nav__link" >sair</a></li>
+                <li className="nav__item"><a href="/" className="nav__link" >sair</a></li>
             </ul>
             <div onClick={navToggle} className={icon}>
         <div className="line1"></div>

@@ -1,10 +1,9 @@
 import React from 'react'
+import Header from '../components/header/Header';
 
 const User = () => {
   return (
-    <div>
-      <h1>User </h1>
-    </div>
+    <Header/>
   )
 }
 
