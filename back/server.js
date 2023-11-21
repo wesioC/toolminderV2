@@ -180,17 +180,17 @@ app.post('/removetools', async (req, res) => {
 });
 
 app.post('/edittools', async (req, res) => {
+  const oldToolCode = req.body.oldToolCode; // Supondo que você tem o código antigo da ferramenta
   const toolCode = req.body.toolCode;
   const toolName = req.body.toolName;
   const toolQuantity = req.body.toolQuantity;
-  // console.log(toolCode, toolName, toolQuantity)
 
-  if (!toolCode || !toolName || !toolQuantity) {
-    return res.status(400).json({ error: 'Código, nome e quantidade são obrigatórios' });
+  if (!oldToolCode || !toolCode || !toolName || !toolQuantity) {
+    return res.status(400).json({ error: 'Código antigo, código, nome e quantidade são obrigatórios' });
   }
 
-  const sql = 'UPDATE tools SET toolName = ?, toolQuantity = ? WHERE toolCode = ?';
-  db.query(sql, [toolName, toolQuantity, toolCode], (error, result) => {
+  const sql = 'UPDATE tools SET toolCode = ?, toolName = ?, toolQuantity = ? WHERE toolCode = ?';
+  db.query(sql, [toolCode, toolName, toolQuantity, oldToolCode], (error, result) => {
     if (error) {
       console.error('Erro na consulta SQL: ' + error.message);
       return res.status(500).json({ error: 'Erro ao editar a ferramenta no banco de dados' });
@@ -199,6 +199,8 @@ app.post('/edittools', async (req, res) => {
     res.status(201).json({ message: 'Ferramenta editada com sucesso' });
   });
 });
+
+
 
 app.post('/addloan', async (req, res) => {
   const toolCode = req.body.toolCode;

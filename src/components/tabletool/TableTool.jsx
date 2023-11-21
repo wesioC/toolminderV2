@@ -65,7 +65,7 @@ const TableTool = ({ searchTerm }) => {
                             <Table.Cell align='center'>
                             <div className="button-container">
                                 <Loan toolName={tool.toolName} toolCode={tool.toolCode}/>
-                                <CrudTool onDelete={() => handleDelete(tool.toolCode)} />
+                                <CrudTool onDelete={() => handleDelete(tool.toolCode)} toolCode={tool.toolCode} toolName={tool.toolName} toolQuantity={tool.toolQuantity}/>
                             </div>
                         </Table.Cell>
                         </Table.Row>

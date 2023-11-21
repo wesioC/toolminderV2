@@ -3,8 +3,9 @@ import './CrudTool.css'
 import { Flex, DropdownMenu, Button } from '@radix-ui/themes';
 import '@radix-ui/themes/styles.css';
 import { FiMoreVertical } from "react-icons/fi";
+import EditTool from './EditTool';
 
-const CrudTool = ({ onDelete }) => {
+const CrudTool = ({ onDelete, toolCode, toolName, toolQuantity }) => {
     const handleDeleteClick = () => {
         onDelete && onDelete(); 
     };
@@ -19,7 +20,7 @@ const CrudTool = ({ onDelete }) => {
                     </Button>
                 </DropdownMenu.Trigger>
                 <DropdownMenu.Content variant="solid">
-                    <DropdownMenu.Item shortcut=" E">Editar</DropdownMenu.Item>
+                    <EditTool toolCode={toolCode} toolName={toolName} toolQuantity={toolQuantity} />                    
                     <DropdownMenu.Separator />
 
                     <DropdownMenu.Item shortcut=" ⌫" color="red" onClick={handleDeleteClick}>
