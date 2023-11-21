@@ -109,7 +109,7 @@ const Tool = () => {
         </Form.Submit>
       </Form.Root>
       <TableTool/>
-       
+       <div className='margin__'></div>
     </Flex>
     </>
   )

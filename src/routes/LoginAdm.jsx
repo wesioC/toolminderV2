@@ -34,7 +34,7 @@ const LoginAdm = () => {
 
                 </div>
             </Flex>
-            <Footer />
+            {/* <Footer /> */}
         </>
     )
 }
