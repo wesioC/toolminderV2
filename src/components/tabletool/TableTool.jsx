@@ -5,9 +5,7 @@ import './TableTool.css';
 import Loan from '../loan/Loan';
 import CrudTool from '../CrudTool/CrudTool';
 
-
-
-const TableTool = ({ searchTerm }) => {
+const TableTool = ({ searchTerm, matricula }) => {
     const [tools, setTools] = useState([]);
 
     const filteredTools = tools.filter(tool =>
@@ -64,7 +62,7 @@ const TableTool = ({ searchTerm }) => {
                             <Table.Cell align='center'>Ésio</Table.Cell>
                             <Table.Cell align='center'>
                             <div className="button-container">
-                                <Loan toolName={tool.toolName} toolCode={tool.toolCode}/>
+                                <Loan toolName={tool.toolName} toolCode={tool.toolCode} matricula={matricula}/>
                                 <CrudTool onDelete={() => handleDelete(tool.toolCode)} toolCode={tool.toolCode} toolName={tool.toolName} toolQuantity={tool.toolQuantity}/>
                             </div>
                         </Table.Cell>

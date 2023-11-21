@@ -34,9 +34,7 @@ function Header({matricula}) {
   };
     return (
         <nav className="nav">
-            <a href={`/home?matricula=${matricula}`} className="nav__brand">
-              <img src="/img/toolminder.svg" alt="Logo Toolminder" />
-            </a>
+            <a href={`/home?matricula=${matricula}`} className="nav__brand"><img src="\src\img\toolminder.svg"></img></a>
             <ul className={active}>
                 <li className="nav__item"><a href={`/tool?matricula=${matricula}`} className="nav__link">Ferramentas</a></li>
                 <li className="nav__item"><a href={`/historico?matricula=${matricula}`}  className="nav__link">Histórico</a></li>

@@ -1,14 +1,28 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {Button, Dialog, Flex, Text, TextField } from '@radix-ui/themes';
 import InputMask from 'react-input-mask';
 import "./Loan.css"
 
-const Loan = ({ toolName, toolCode }) => {
+const Loan = ({ toolName, toolCode, matricula }) => {
   const [receiverName, setReceiverName] = useState('');
   const [receiverEmail, setReceiverEmail] = useState('');
   const [receiverPhone, setReceiverPhone] = useState(''); 
   const [returnDate, setReturnDate] = useState('');
   const [loanQuantity, setLoanQuantity] = useState('');
+  const [userName, setUserName] = useState('');
+
+  useEffect(() => {
+    // Chama a rota para obter o nome do usuário ao carregar a página Home
+
+    fetch(`http://localhost:3000/getusername?matricula=${matricula}`)
+      .then((response) => response.json())
+      .then((data) => {
+        // Atualiza o estado com o nome retornado pela rota
+        setUserName(data[0].name)
+      })
+      .catch((error) => console.error('Erro ao obter nome do usuário:', error));
+    
+  }, [location.pathname]);
 
   const handleLoanSubmission = () => {
     // Preparando os dados para enviar na solicitação POST
@@ -18,7 +32,7 @@ const Loan = ({ toolName, toolCode }) => {
       toolQuantity: loanQuantity,
       dateHand: returnDate,
       receiver: receiverName,
-      sender: 'UserName', // Definindo o remetente como 'UserName'
+      sender: userName, // Definindo o remetente como 'UserName'
       receiverEmail: receiverEmail,
       receiverPhone: receiverPhone
     };

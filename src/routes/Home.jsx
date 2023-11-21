@@ -34,7 +34,7 @@ const Home = () => {
             />
           </TextField.Root>
         </div>
-        <TableTool searchTerm={searchTerm} />
+        <TableTool searchTerm={searchTerm} matricula={matricula} />
         <div className="responsive-text">
           <h4>Materiais com devolução próximo ao vencimento:</h4>
           <TableLoan searchTerm={searchTerm} />
