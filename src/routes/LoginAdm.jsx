@@ -44,8 +44,7 @@ const LoginAdm = () => {
             <div className="user-name"></div>
             <label className="input_login">
               <TextField.Input
-                type="email"
-                placeholder="Email"
+                placeholder="Matrícula"
                 value={matricula}
                 onChange={(e) => setMatricula(e.target.value)}
               />
