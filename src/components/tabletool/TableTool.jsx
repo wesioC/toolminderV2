@@ -28,16 +28,16 @@ const TableTool = ({ searchTerm, matricula }) => {
             },
             body: JSON.stringify({ toolCode }) // Envia o toolCode para remoção
         })
-        .then(response => {
-            if (response.ok) {
-                // Se a remoção for bem-sucedida, atualize os dados
-                fetch('http://localhost:3000/getavailabletools')
-                    .then(response => response.json())
-                    .then(data => setTools(data))
-                    .catch(error => console.error('Erro ao buscar ferramentas:', error));
-            }
-        })
-        .catch(error => console.error('Erro ao remover ferramenta:', error));
+            .then(response => {
+                if (response.ok) {
+                    // Se a remoção for bem-sucedida, atualize os dados
+                    fetch('http://localhost:3000/getavailabletools')
+                        .then(response => response.json())
+                        .then(data => setTools(data))
+                        .catch(error => console.error('Erro ao buscar ferramentas:', error));
+                }
+            })
+            .catch(error => console.error('Erro ao remover ferramenta:', error));
     };
 
     return (
@@ -59,13 +59,13 @@ const TableTool = ({ searchTerm, matricula }) => {
                             <Table.Cell align='center'>{tool.toolCode}</Table.Cell>
                             <Table.Cell align='center'>{tool.toolName}</Table.Cell>
                             <Table.Cell align='center'>{tool.toolQuantity}</Table.Cell>
-                            <Table.Cell align='center'>Ésio</Table.Cell>
+                            <Table.Cell align='center'> {tool.toolCode.startsWith('IF') ? 'IF Goiano' : 'Marconi'}</Table.Cell>
                             <Table.Cell align='center'>
-                            <div className="button-container">
-                                <Loan toolName={tool.toolName} toolCode={tool.toolCode} matricula={matricula}/>
-                                <CrudTool onDelete={() => handleDelete(tool.toolCode)} toolCode={tool.toolCode} toolName={tool.toolName} toolQuantity={tool.toolQuantity}/>
-                            </div>
-                        </Table.Cell>
+                                <div className="button-container">
+                                    <Loan toolName={tool.toolName} toolCode={tool.toolCode} matricula={matricula} toolQuantity={tool.toolQuantity} />
+                                    <CrudTool onDelete={() => handleDelete(tool.toolCode)} toolCode={tool.toolCode} toolName={tool.toolName} toolQuantity={tool.toolQuantity} />
+                                </div>
+                            </Table.Cell>
                         </Table.Row>
                     ))}
                 </Table.Body>

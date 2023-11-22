@@ -40,6 +40,7 @@ const Home = () => {
           <TableLoan searchTerm={searchTerm} />
         </div>
         {/* <Historic/> */}
+        <div className='margin__'></div>
       </Flex>
       {/* <Footer/>  */}
     </>

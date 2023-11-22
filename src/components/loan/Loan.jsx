@@ -3,13 +3,14 @@ import {Button, Dialog, Flex, Text, TextField } from '@radix-ui/themes';
 import InputMask from 'react-input-mask';
 import "./Loan.css"
 
-const Loan = ({ toolName, toolCode, matricula }) => {
+const Loan = ({ toolName, toolCode, matricula, toolQuantity }) => {
   const [receiverName, setReceiverName] = useState('');
   const [receiverEmail, setReceiverEmail] = useState('');
   const [receiverPhone, setReceiverPhone] = useState(''); 
   const [returnDate, setReturnDate] = useState('');
   const [loanQuantity, setLoanQuantity] = useState('');
   const [userName, setUserName] = useState('');
+  
 
   useEffect(() => {
     // Chama a rota para obter o nome do usuário ao carregar a página Home
@@ -145,17 +146,17 @@ const Loan = ({ toolName, toolCode, matricula }) => {
     </Flex>
 
     <Flex gap="3" mt="4" justify="end">
-      <Dialog.Close>
-        <Button color="red">
-          Cancelar
-        </Button>
-      </Dialog.Close>
-      <Dialog.Close>
-        <Button onClick={handleLoanSubmission}>Emprestar</Button>
-      </Dialog.Close>
-    </Flex>
-  </Dialog.Content>
-</Dialog.Root>
+        <Dialog.Close>
+          <Button color="red">Cancelar</Button>
+        </Dialog.Close>
+        <Dialog.Close>
+          <Button onClick={handleLoanSubmission} disabled={parseInt(loanQuantity, 10) > toolQuantity}>
+            Emprestar
+          </Button>
+        </Dialog.Close>
+      </Flex>
+    </Dialog.Content>
+  </Dialog.Root>
   )
 }
 

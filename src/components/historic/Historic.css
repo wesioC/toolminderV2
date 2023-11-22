@@ -16,11 +16,13 @@
     margin: auto;
     
 }
-
+.margin__{
+    margin-bottom: 7rem;
+  }
 
 @media screen and (max-width: 768px){
     .table__historic{
-        width: 100% !important; 
+        width: 95% !important; 
     }
 }
 

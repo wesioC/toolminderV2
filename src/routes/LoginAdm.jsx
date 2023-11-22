@@ -10,35 +10,35 @@ const LoginAdm = () => {
   const navigate = useNavigate();
   const [userName, setUserName] = useState('');  
 
-  // const handleLogin = async () => {
-  //   const response = await fetch('http://localhost:3000/login', {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: JSON.stringify({
-  //       matricula: matricula,
-  //       senha: senha,
-  //     }),
-  //   });
-
-  //   const data = await response.json();
-
-  //   if (response.status === 200) {
-  //     // Se o login for bem-sucedido, redireciona para a página Home
-  //     navigate(`/home?matricula=${matricula}`);
-  //     // Atualiza o estado com o nome de usuário retornado na resposta
-  //     setUserName(data.userName); // Supondo que o nome retornado esteja em data.userName
-  //   } else {
-  //     // Caso contrário, mostra uma mensagem de erro (pode ser exibido no frontend)
-  //     console.log(data.error);
-  //   }
-  // };
-
   const handleLogin = async () => {
-    matricula = 1;
-    navigate(`/home?matricula=${matricula}`);
+    const response = await fetch('http://localhost:3000/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        matricula: matricula,
+        senha: senha,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (response.status === 200) {
+      // Se o login for bem-sucedido, redireciona para a página Home
+      navigate(`/home?matricula=${matricula}`);
+      // Atualiza o estado com o nome de usuário retornado na resposta
+      setUserName(data.userName); // Supondo que o nome retornado esteja em data.userName
+    } else {
+      // Caso contrário, mostra uma mensagem de erro (pode ser exibido no frontend)
+      console.log(data.error);
+    }
   };
+
+  // const handleLogin = async () => {
+  //   matricula = 1;
+  //   navigate(`/home?matricula=${matricula}`);
+  // };
 
   return (
     <>

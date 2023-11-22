@@ -36,6 +36,7 @@ const Historic = ( {searchTerm} ) => {
                         <Table.ColumnHeaderCell className='title__row' align='center'>Ferramenta</Table.ColumnHeaderCell>
                         <Table.ColumnHeaderCell className='title__row' align='center'>Quantidade</Table.ColumnHeaderCell>
                         <Table.ColumnHeaderCell className='title__row' align='center'>Data da devolução</Table.ColumnHeaderCell>
+                        <Table.ColumnHeaderCell className='title__row' align='center'>Responsável</Table.ColumnHeaderCell>
                     </Table.Row>
                 </Table.Header>
 
@@ -47,10 +48,12 @@ const Historic = ( {searchTerm} ) => {
                             <Table.RowHeaderCell align='center'>{loan.toolName}</Table.RowHeaderCell>
                             <Table.Cell align='center'>{loan.toolQuantity}</Table.Cell>
                             <Table.Cell align='center'>{loan.dateReturn}</Table.Cell>
+                            <Table.Cell align='center'>{loan.sender}</Table.Cell>
                         </Table.Row>
                     ))}
                 </Table.Body>
             </Table.Root>
+            <div className='margin__'></div>
         </div>
   )
 }

@@ -3,6 +3,10 @@
 @import '@radix-ui/themes/styles.css';
 
 .footer_ {
+  position: relative;
+  bottom: 0;
+  left: 0;
+  width: 100%;
   background: rgba(1, 128, 49, 0.6);
   color: white;
   padding: 1rem;
@@ -10,9 +14,6 @@
   flex-direction: column; /* Para ajustar para exibição vertical em telas menores */
   justify-content: center;
   align-items: center;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
   backdrop-filter: blur(10px);
   z-index: 999; /* Ajuste a propriedade z-index para garantir que o footer não seja sobreposto */
 }
