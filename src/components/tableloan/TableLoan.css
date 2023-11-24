@@ -17,7 +17,16 @@
     
 }
 
-
+.a__link{
+    text-decoration: none;
+    color: black;
+    /* font-style: italic; */
+    text-decoration: underline;
+}
+.a__link:hover{
+    text-decoration: none;
+    color: green;
+}
 @media screen and (max-width: 768px){
     .table__loan{
         width: 100% !important; 

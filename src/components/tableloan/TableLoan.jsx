@@ -3,7 +3,17 @@ import { Table, Button } from '@radix-ui/themes';
 import './TableLoan.css';
 import { FaBell } from 'react-icons/fa';
 
+
 const TableLoan = ({ searchTerm }) => {
+    const formatPhoneNumberForWhatsApp = (phoneNumber) => {
+        // Remover todos os caracteres não numéricos
+        const cleanedNumber = phoneNumber.replace(/\D/g, '');
+        // Se o número começar com 55 (código de país do Brasil), remova-o
+        const formattedNumber = cleanedNumber.startsWith('55') ? cleanedNumber.substring(2) : cleanedNumber;
+        let n = '55' + formattedNumber;
+        return n;
+    };
+
     const [loans, setLoans] = useState([]);
 
     const filteredLoans = loans.filter(loan =>
@@ -35,27 +45,27 @@ const TableLoan = ({ searchTerm }) => {
         };
         // Enviar a solicitação POST para a rota http://localhost:3000/addloan
         fetch('http://localhost:3000/updateloan', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(loanData),
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(loanData),
         })
-          .then(response => {
-            if (response.ok) {
-              // Lógica adicional caso a solicitação seja bem-sucedida
-              console.log('Empréstimo atualizado com sucesso!');
-              window.location.reload();
-            } else {
-              throw new Error('Erro ao atualizado empréstimo');
-            }
-          })
-          .catch(error => {
-            console.error('Erro ao atualizado empréstimo:', error);
-            // Lógica adicional para lidar com falhas na solicitação
-          });
-        
-      };
+            .then(response => {
+                if (response.ok) {
+                    // Lógica adicional caso a solicitação seja bem-sucedida
+                    console.log('Empréstimo atualizado com sucesso!');
+                    window.location.reload();
+                } else {
+                    throw new Error('Erro ao atualizado empréstimo');
+                }
+            })
+            .catch(error => {
+                console.error('Erro ao atualizado empréstimo:', error);
+                // Lógica adicional para lidar com falhas na solicitação
+            });
+
+    };
 
     return (
         <div className='table__loan'>
@@ -75,7 +85,11 @@ const TableLoan = ({ searchTerm }) => {
                     {filteredLoans.map((loan, index) => (
                         <Table.Row key={index}>
                             <Table.RowHeaderCell align='center'>{loan.receiver}</Table.RowHeaderCell>
-                            <Table.RowHeaderCell align='center'>{loan.receiverPhone}</Table.RowHeaderCell>
+                            <Table.RowHeaderCell align='center'>
+                            <a className='a__link' href={`https://wa.me/${formatPhoneNumberForWhatsApp(loan.receiverPhone)}`} target='_blank'>
+                                {loan.receiverPhone}
+                            </a>
+                            </Table.RowHeaderCell>
                             <Table.RowHeaderCell align='center'>{loan.toolName}</Table.RowHeaderCell>
                             <Table.Cell align='center'>{loan.toolQuantity}</Table.Cell>
                             <Table.Cell align='center'>{loan.dateHand}</Table.Cell>
@@ -83,7 +97,7 @@ const TableLoan = ({ searchTerm }) => {
                                 <div className="button-container">
                                     <Button variant="solid" color='blue'><FaBell /></Button>
                                     <Button variant="solid" color='green'
-                                    onClick={() => updateLoan(loan.loanCode, loan.toolQuantity)}
+                                        onClick={() => updateLoan(loan.loanCode, loan.toolQuantity)}
                                     >Devolver</Button>
                                 </div>
                             </Table.Cell>

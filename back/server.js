@@ -3,6 +3,7 @@ const mysql = require('mysql');
 const multer = require('multer');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const nodemailer = require('nodemailer');
 
 const app = express();
 app.use(cors()); 
@@ -315,5 +316,36 @@ app.post('/updateloan', async (req, res) => {
         });
       });
     });
+  });
+});
+
+app.post('/enviarEmail', (req, res) => {
+  const { email } = req.body;
+  console.log('email:',email)
+  // Configurações do serviço de e-mail (neste caso, usando o serviço Gmail)
+  const transporter = nodemailer.createTransport({
+    service: 'Gmail',
+    auth: {
+      user: 'gugumourarv@gmail.com', // Insira seu e-mail aqui
+      pass: 'gustavo*//' // Insira sua senha aqui
+    }
+  });
+
+  const mailOptions = {
+    from: 'gugumourarv@gmail.com', // Seu e-mail
+    to: email, // E-mail do destinatário recebido via req.body.email
+    subject: 'Bom dia!',
+    text: 'Olá! Desejamos a você um ótimo dia!'
+  };
+
+  // Enviar e-mail
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.error('Erro ao enviar e-mail:', error);
+      res.status(500).json({ error: 'Erro ao enviar e-mail' });
+    } else {
+      console.log('E-mail enviado:', info.response);
+      res.status(200).json({ message: 'E-mail enviado com sucesso' });
+    }
   });
 });
