@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Table, Button } from '@radix-ui/themes';
 import './TableLoan.css';
 import { FaBell } from 'react-icons/fa';
+import Email from '../email/Email';
 
 
 const TableLoan = ({ searchTerm }) => {
@@ -95,7 +96,7 @@ const TableLoan = ({ searchTerm }) => {
                             <Table.Cell align='center'>{loan.dateHand}</Table.Cell>
                             <Table.Cell align='center'>
                                 <div className="button-container">
-                                    <Button variant="solid" color='blue'><FaBell /></Button>
+                                    <Email receiver={loan.receiver} receiverEmail={loan.receiverEmail} toolName={loan.toolName} toolQuantity={loan.toolQuantity} dateHand={loan.dateHand} />
                                     <Button variant="solid" color='green'
                                         onClick={() => updateLoan(loan.loanCode, loan.toolQuantity)}
                                     >Devolver</Button>

@@ -1,33 +1,37 @@
 import React from 'react';
-import './CrudTool.css';
+import '../tableloan/TableLoan.css';
 import { Flex, DropdownMenu, Button } from '@radix-ui/themes';
 import '@radix-ui/themes/styles.css';
 import { FaBell } from 'react-icons/fa';
-import EditTool from './EditTool';
 
 const sendEmail = async (toolName, toolQuantity, receiver, receiverEmail, dateHand) => {
-  try {
-    const response = await fetch('http://seuservidor.com/enviarEmail', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        email: receiverEmail, // O e-mail do destinatário
-        subject: 'Assunto do e-mail aqui', // Assunto do e-mail
-        text: 'Texto do e-mail aqui', // Conteúdo do e-mail
-      }),
-    });
+  const emailData = {
+    email: receiverEmail,
+    toolName: toolName,
+    toolQuantity: toolQuantity,
+    receiver: receiver,
+    dateHand: dateHand,
+  };
 
-    if (response.ok) {
-      alert('E-mail enviado com sucesso!');
-    } else {
-      alert('Erro ao enviar o e-mail.');
-    }
-  } catch (error) {
-    console.error('Erro ao enviar o e-mail:', error);
-    alert('Erro ao enviar o e-mail. Verifique o console para mais informações.');
-  }
+  fetch('http://localhost:3000/enviarEmail', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(emailData),
+  })
+    .then(response => {
+      if (response.status === 200) {
+        console.log('Email enviado com sucesso!');
+        // Lógica adicional caso a solicitação seja bem-sucedida
+        window.location.reload();
+      } else {
+        throw new Error('Erro ao enviar email');
+      }
+    })
+    .catch(error => {
+      console.error('Erro ao enviar email:', error);
+    });
 };
 
 const Email = ({ toolName, toolQuantity, receiver, receiverEmail, dateHand }) => {

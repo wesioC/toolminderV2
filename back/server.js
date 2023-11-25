@@ -4,6 +4,9 @@ const multer = require('multer');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
+const { google } = require('googleapis');
+const readline = require('readline');
+const fs = require('fs');
 
 const app = express();
 app.use(cors()); 
@@ -319,33 +322,34 @@ app.post('/updateloan', async (req, res) => {
   });
 });
 
-app.post('/enviarEmail', (req, res) => {
-  const { email } = req.body;
-  console.log('email:',email)
-  // Configurações do serviço de e-mail (neste caso, usando o serviço Gmail)
-  const transporter = nodemailer.createTransport({
-    service: 'Gmail',
-    auth: {
-      user: 'gugumourarv@gmail.com', // Insira seu e-mail aqui
-      pass: 'gustavo*//' // Insira sua senha aqui
-    }
-  });
 
-  const mailOptions = {
-    from: 'gugumourarv@gmail.com', // Seu e-mail
-    to: email, // E-mail do destinatário recebido via req.body.email
-    subject: 'Bom dia!',
-    text: 'Olá! Desejamos a você um ótimo dia!'
-  };
-
-  // Enviar e-mail
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      console.error('Erro ao enviar e-mail:', error);
-      res.status(500).json({ error: 'Erro ao enviar e-mail' });
-    } else {
-      console.log('E-mail enviado:', info.response);
-      res.status(200).json({ message: 'E-mail enviado com sucesso' });
+app.post('/enviarEmail', async (req, res) => {
+  const { email, toolName, toolQuantity, dateHand, receiver} = req.body;
+  // console.log(email, toolName, toolQuantity, dateHand, receiver)
+  let config=
+  {
+    service:"gmail",
+    auth:{
+        user:"ifrvcienciasagrarias@gmail.com",
+        pass:"pzrpcxqxnwuoftpl"
     }
-  });
+  }
+
+  let transporter=nodemailer.createTransport(config)
+
+  let message={
+      from:"ifrvcienciasagrarias@gmail.com",
+      to: email,
+      subject:`Objeto ${toolName} perto do prazo de entrega ${dateHand}`,
+      html:`<p>Olá ${receiver}, não se esqueça de devolver o objeto ${toolName}, que está perto do prazo de devolução ${dateHand} ao laboratório de Ciências Agrárias</p>`
+  }
+
+  try {
+    await transporter.sendMail(message);
+    res.status(200).json({ message: 'E-mail enviado com sucesso' });
+  } catch (err) {
+    console.error('Erro ao enviar e-mail:', err);
+    res.status(500).json({ error: 'Erro ao enviar e-mail' });
+  }
+
 });
